@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarlan & Blaire — Our Journey</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        roseGold: '#B76E79',
+                        blush: '#FFF0F5',
+                        softPink: '#FCE4EC',
+                        warmCream: '#FFFDF9',
+                        burgundy: '#6B1D2F',
+                        deepRose: '#8C2B42',
+                        dustyPink: '#E8C5C8',
+                        warmCharcoal: '#2D282A'
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        script: ['Alex Brush', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base styles */
+        body {
+            background-color: #FFFDF9;
+            color: #2D282A;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Subtle Glassmorphism */
+        .glass-card {
+            background: rgba(255, 253, 249, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(183, 110, 121, 0.18);
+            box-shadow: 0 10px 30px -5px rgba(107, 29, 47, 0.05);
+        }
+
+        /* Polaroid Card Styles */
+        .polaroid {
+            background: #ffffff;
+            padding: 14px 14px 24px 14px;
+            box-shadow: 0 8px 20px rgba(107, 29, 47, 0.08), 0 2px 6px rgba(0,0,0,0.04);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform-origin: center center;
+            position: relative;
+        }
+
+        .polaroid:hover {
+            transform: translateY(-8px) rotate(0deg) scale(1.03) !important;
+            box-shadow: 0 20px 35px rgba(107, 29, 47, 0.16), 0 8px 12px rgba(0,0,0,0.06);
+            z-index: 20;
+        }
+
+        .polaroid-tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 26px;
+            background: rgba(245, 235, 224, 0.65);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(210, 190, 180, 0.4);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        /* Interactive Envelope Cards */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope-card {
+            background: linear-gradient(135deg, #FFF0F5 0%, #FCE4EC 100%);
+            border: 1px solid rgba(183, 110, 121, 0.25);
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .envelope-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(107, 29, 47, 0.12);
+            border-color: rgba(183, 110, 121, 0.5);
+        }
+
+        .wax-seal {
+            background: radial-gradient(circle, #8C2B42 0%, #6B1D2F 100%);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFFDF9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E8C5C8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B76E79;
+        }
+
+        /* Floating animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Particle canvas overlay -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 sm:space-y-24">
+
+        <!-- HEADER / HERO -->
+        <header class="text-center space-y-4 pt-6 sm:pt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-softPink/60 text-burgundy text-xs sm:text-sm font-medium tracking-wide border border-roseGold/20">
+                <i class="fa-solid fa-heart text-roseGold text-xs animate-pulse"></i>
+                <span>Tarlan, HK &nbsp;✦&nbsp; Blaire, UK</span>
+                <i class="fa-solid fa-heart text-roseGold text-xs animate-pulse"></i>
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-burgundy tracking-tight">
+                Continents apart, united by hearts
+            </h1>
+            
+            <p class="font-script text-2xl sm:text-3xl text-roseGold max-w-2xl mx-auto leading-relaxed">
+                "Across thousands of miles, love knows no distance, only direction."
+            </p>
+        </header>
+
+
+        <!-- DISTANCE SECTION -->
+        <section class="glass-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-softPink/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-dustyPink/30 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="max-w-3xl mx-auto space-y-8">
+                <div class="space-y-2">
+                    <span class="text-xs sm:text-sm uppercase tracking-widest text-roseGold font-semibold">The Space Between Us</span>
+                </div>
+
+                <!-- Distance Metric Counter -->
+                <div class="py-6 px-4 bg-white/70 rounded-2xl border border-roseGold/15 shadow-inner flex flex-col items-center justify-center space-y-2">
+                    <div class="flex items-baseline space-x-2">
+                        <span id="distanceCounter" class="font-serif text-5xl sm:text-7xl md:text-8xl font-bold text-burgundy tracking-tight">
+                            9,600
+                        </span>
+                        <span id="distanceUnit" class="text-xl sm:text-3xl font-serif text-roseGold font-medium">KM</span>
+                    </div>
+                </div>
+
+                <!-- City Connection Nodes -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                    <div class="p-4 bg-white/50 rounded-xl border border-roseGold/10">
+                        <div class="text-xs text-roseGold font-medium">Origin</div>
+                        <div class="font-serif text-lg font-bold text-warmCharcoal">Blaire</div>
+                        <div class="text-xs text-gray-500">United Kingdom 🇬🇧</div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center space-y-1 my-2 sm:my-0">
+                        <div class="w-full flex items-center justify-center space-x-2 text-roseGold">
+                            <span class="w-12 h-px bg-roseGold/30"></span>
+                            <i class="fa-solid fa-plane text-base transform rotate-45 text-burgundy"></i>
+                            <span class="w-12 h-px bg-roseGold/30"></span>
+                        </div>
+                        <span class="text-[11px] text-roseGold/80 italic">Unbroken Line of Affection</span>
+                    </div>
+
+                    <div class="p-4 bg-white/50 rounded-xl border border-roseGold/10">
+                        <div class="text-xs text-roseGold font-medium">Destination</div>
+                        <div class="font-serif text-lg font-bold text-warmCharcoal">Tarlan</div>
+                        <div class="text-xs text-gray-500">Hong Kong 🇭🇰</div>
+                    </div>
+                </div>
+
+                <!-- Romantic Quote Banner -->
+                <div class="pt-4 border-t border-roseGold/10">
+                    <div id="quoteDisplay" class="font-serif italic text-lg sm:text-xl text-burgundy min-h-[3rem] flex items-center justify-center transition-opacity duration-500">
+                        "Distance means so little when someone means so much."
+                    </div>
+                    <button onclick="nextQuote()" class="mt-3 text-xs text-roseGold hover:text-burgundy font-medium flex items-center justify-center gap-1.5 mx-auto transition">
+                        <i class="fa-solid fa-rotate text-[10px]"></i>
+                        <span>Read another reminder</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PHOTO MEMORY GALLERY / POLAROID COLLECTION -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <span class="text-xs sm:text-sm uppercase tracking-widest text-roseGold font-semibold">Our Memories</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-burgundy font-semibold">Collection of Best Moments</h2>
+                <p class="text-sm text-gray-600 max-w-xl mx-auto">From Tarlan to Blaire</p>
+            </div>
+
+            <!-- Polaroid Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-4">
+
+                <!-- Polaroid Item 1 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(-2deg);" onclick="openLightbox(0)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-0" src="IMG_4829.jpg" onerror="handleImageError(this, 'Sleeping with Mickey plushie', '🧸')" alt="Sleeping with Mickey plushie" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Sleeping with Mickey Plushie</h4>
+                        <p class="font-script text-lg text-roseGold">Sweet dreams across timezones</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 2 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(2.5deg);" onclick="openLightbox(1)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-1" src="IMG_4847.jpg" onerror="handleImageError(this, 'Golden Hour Student Hall', '🌅')" alt="Golden hour reflection in student hall" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Golden Hour Reflection</h4>
+                        <p class="font-script text-lg text-roseGold">Student hall glow & warm thoughts</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 3 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(-1.5deg);" onclick="openLightbox(2)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-2" src="IMG_4527.jpg" onerror="handleImageError(this, 'Fresh Flowers Outdoors', '🌸')" alt="Holding fresh flowers together outdoors" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Fresh Flowers Outdoors</h4>
+                        <p class="font-script text-lg text-roseGold">Blooms held in gentle warmth</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 4 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(3deg);" onclick="openLightbox(3)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-3" src="IMG_4530.jpg" onerror="handleImageError(this, 'Ferris Wheel Skyline', '🎡')" alt="Ferris wheel / skyline cozy selfie" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Ferris Wheel Cozy Selfie</h4>
+                        <p class="font-script text-lg text-roseGold">High above the lights with you</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 5 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(-2.5deg);" onclick="openLightbox(4)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-4" src="IMG_4565.jpg" onerror="handleImageError(this, 'Night Out Warm Outfits', '✨')" alt="Night out, matching warm outfits" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Night Out Sweaters</h4>
+                        <p class="font-script text-lg text-roseGold">Matching warm winter embraces</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 6 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(1.8deg);" onclick="openLightbox(5)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-5" src="004ABF56-81A3-4AC6-94B5-DEA6C1514F04.JPG" onerror="handleImageError(this, 'Photo Booth Kisses Strip', '📸')" alt="Photo booth sweet cheek kisses strip" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Photo Booth Kiss Strip</h4>
+                        <p class="font-script text-lg text-roseGold">Cheek kisses & timeless laughter</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 7 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(-3deg);" onclick="openLightbox(6)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-6" src="308A189C-2C99-4827-8BC4-B819CC5590F0.jpg" onerror="handleImageError(this, 'Pink & Green Flower Bouquet', '💐')" alt="Fresh vibrant pink & green flower bouquet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Pink & Green Bouquet</h4>
+                        <p class="font-script text-lg text-roseGold">Colors that brightened our day</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid Item 8 -->
+                <div class="polaroid rounded-sm cursor-pointer group" style="transform: rotate(2deg);" onclick="openLightbox(7)">
+                    <div class="polaroid-tape"></div>
+                    <div class="relative aspect-square overflow-hidden bg-roseGold/10 rounded-xs mb-3">
+                        <img id="img-7" src="e3d07b33-4a16-4aac-94cd-b19e1e9815e4.jpg" onerror="handleImageError(this, 'Cozy Cafe Kiss Moment', '☕')" alt="Cozy cafe kiss moment" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-center space-y-1 px-1">
+                        <h4 class="font-serif text-base font-bold text-burgundy line-clamp-1">Cozy Cafe Kiss</h4>
+                        <p class="font-script text-lg text-roseGold">Warm coffee & quiet tenderness</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Local File Upload Fallback Box -->
+            <div class="glass-card rounded-2xl p-6 text-center space-y-4 max-w-2xl mx-auto border-dashed border-2 border-roseGold/30 mt-8">
+                <div>
+                    <label for="localPhotoInput" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-burgundy hover:bg-deepRose text-white text-xs font-medium cursor-pointer shadow-md transition">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>Select Photos from Device</span>
+                    </label>
+                    <input type="file" id="localPhotoInput" multiple accept="image/*" class="hidden" onchange="handleLocalFiles(event)">
+                </div>
+                <div id="fileStatus" class="text-xs text-roseGold font-medium hidden"></div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center pt-8 border-t border-roseGold/15 space-y-4">
+            <div class="flex items-center justify-center space-x-3 text-roseGold">
+                <span class="text-sm font-serif">Tarlan</span>
+                <i class="fa-solid fa-heart text-xs text-burgundy animate-pulse"></i>
+                <span class="text-sm font-serif">Blaire</span>
+            </div>
+            <p class="font-script text-2xl text-burgundy">"Distance is temporary, but our love is forever."</p>
+            <p class="text-[11px] text-gray-400">Made with endless love across 9,600 kilometers</p>
+        </footer>
+
+    </div>
+
+    <!-- MODAL: PHOTO LIGHTBOX -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="max-w-3xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="lightboxModalContainer">
+            
+            <!-- Close Button -->
+            <button onclick="closeLightbox()" class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-burgundy transition">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+
+            <!-- Image View -->
+            <div class="md:w-3/5 bg-warmCharcoal/5 flex items-center justify-center min-h-[300px] max-h-[70vh] p-4">
+                <img id="lightboxImg" src="" alt="" class="max-h-full max-w-full object-contain rounded-lg shadow-md">
+            </div>
+
+            <!-- Image Details -->
+            <div class="md:w-2/5 p-6 flex flex-col justify-between bg-warmCream space-y-4">
+                <div class="space-y-3">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-roseGold">Polaroid Memory</span>
+                    <h3 id="lightboxTitle" class="font-serif text-2xl font-bold text-burgundy">Photo Title</h3>
+                    <p id="lightboxCaption" class="font-script text-2xl text-roseGold leading-snug">Caption here</p>
+                    <p id="lightboxDescription" class="text-xs text-gray-600 leading-relaxed pt-2">Detailed description...</p>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex items-center justify-between pt-4 border-t border-roseGold/15">
+                    <button onclick="navigateLightbox(-1)" class="px-3 py-1.5 rounded-full bg-softPink text-burgundy text-xs font-semibold hover:bg-roseGold hover:text-white transition flex items-center gap-1">
+                        <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                        <span>Prev</span>
+                    </button>
+                    <span id="lightboxIndex" class="text-xs font-medium text-roseGold">1 / 8</span>
+                    <button onclick="navigateLightbox(1)" class="px-3 py-1.5 rounded-full bg-softPink text-burgundy text-xs font-semibold hover:bg-roseGold hover:text-white transition flex items-center gap-1">
+                        <span>Next</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        // Distance Data
+        const DISTANCE_KM = 9600;
+
+        // Quotes Data
+        const romanticQuotes = [
+            `"Distance means so little when someone means so much."`,
+            `"If you think distance is hard, try closeness without love. Love gives every mile a purpose."`,
+            `"No matter how far apart we are, we share the same sky, the same moon, and the same heart."`,
+            `"No distance is enough to separate us"`,
+            `"The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart."`
+        ];
+        let currentQuoteIndex = 0;
+
+        // Polaroid Photo Data
+        const polaroidData = [
+            {
+                filename: 'IMG_4829.jpg',
+                title: 'Sleeping with Mickey Plushie',
+                caption: 'Sweet dreams across timezones',
+                desc: 'A cozy moment of peace, sleeping gently with the Mickey plushie. Distance can never stop soft and peaceful dreams.',
+                emoji: '🧸'
+            },
+            {
+                filename: 'IMG_4847.jpg',
+                title: 'Golden Hour Reflection',
+                caption: 'Student hall glow & warm thoughts',
+                desc: 'Golden sun rays streaming through the student hall window, creating soft reflections and glowing memories.',
+                emoji: '🌅'
+            },
+            {
+                filename: 'IMG_4527.jpg',
+                title: 'Fresh Flowers Outdoors',
+                caption: 'Blooms held in gentle warmth',
+                desc: 'Holding fresh flowers together under the open sky. Simple outdoor moments made magical together.',
+                emoji: '🌸'
+            },
+            {
+                filename: 'IMG_4530.jpg',
+                title: 'Ferris Wheel Cozy Selfie',
+                caption: 'High above the lights with you',
+                desc: 'A skyline selfie taken high above the city near the ferris wheel. Smiling brightly against the sky.',
+                emoji: '🎡'
+            },
+            {
+                filename: 'IMG_4565.jpg',
+                title: 'Night Out Warm Sweaters',
+                caption: 'Matching warm winter embraces',
+                desc: 'A cozy night out wrapped in warm matching outfits, enjoying the night lights and soft chill.',
+                emoji: '✨'
+            },
+            {
+                filename: '004ABF56-81A3-4AC6-94B5-DEA6C1514F04.JPG',
+                title: 'Photo Booth Sweet Kisses',
+                caption: 'Cheek kisses & timeless laughter',
+                desc: 'Classic photo booth strip full of sweet cheek kisses, silly faces, and pure genuine happiness.',
+                emoji: '📸'
+            },
+            {
+                filename: '308A189C-2C99-4827-8BC4-B819CC5590F0.jpg',
+                title: 'Pink & Green Flower Bouquet',
+                caption: 'Colors that brightened our day',
+                desc: 'A vibrant bouquet of fresh pink blooms and lush green leaves, bringing full spring warmth to our journey.',
+                emoji: '💐'
+            },
+            {
+                filename: 'e3d07b33-4a16-4aac-94cd-b19e1e9815e4.jpg',
+                title: 'Cozy Cafe Kiss Moment',
+                caption: 'Warm coffee & quiet tenderness',
+                desc: 'A warm cafe setting, quiet conversations over hot coffee, and a gentle sweet kiss moment.',
+                emoji: '☕'
+            }
+        ];
+
+        let currentLightboxIdx = 0;
+
+        // Quote Switcher
+        function nextQuote() {
+            const display = document.getElementById('quoteDisplay');
+            display.style.opacity = 0;
+            setTimeout(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % romanticQuotes.length;
+                display.textContent = romanticQuotes[currentQuoteIndex];
+                display.style.opacity = 1;
+            }, 300);
+        }
+
+        // Photo Image Fallback Handler (Renders artistic aesthetic canvas/SVG if file missing)
+        function handleImageError(imgElement, title, emoji) {
+            // Replace broken src with generated SVG placeholder card
+            const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+                <defs>
+                    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFF0F5" />
+                        <stop offset="50%" stop-color="#FCE4EC" />
+                        <stop offset="100%" stop-color="#E8C5C8" />
+                    </linearGradient>
+                </defs>
+                <rect width="400" height="400" fill="url(#bgGrad)"/>
+                <circle cx="200" cy="170" r="60" fill="#B76E79" opacity="0.15" />
+                <text x="200" y="185" font-size="54" text-anchor="middle">${emoji}</text>
+                <text x="200" y="260" font-family="sans-serif" font-size="16" font-weight="600" fill="#6B1D2F" text-anchor="middle">${title}</text>
+                <text x="200" y="285" font-family="sans-serif" font-size="12" fill="#B76E79" text-anchor="middle">Click to view memory details</text>
+            </svg>`;
+            imgElement.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+        }
+
+        // Handle Local File Upload Picker
+        function handleLocalFiles(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            let loadedCount = 0;
+            const statusEl = document.getElementById('fileStatus');
+
+            Array.from(files).forEach(file => {
+                const name = file.name.toLowerCase();
+                // Match file name or load sequentially
+                polaroidData.forEach((item, idx) => {
+                    if (name.includes(item.filename.toLowerCase()) || name.replace(/[^a-z0-0]/g,'').includes(item.filename.toLowerCase().replace(/[^a-z0-0]/g,''))) {
+                        const img = document.getElementById(`img-${idx}`);
+                        if (img) {
+                            img.src = URL.createObjectURL(file);
+                            loadedCount++;
+                        }
+                    }
+                });
+            });
+
+            // If user selected 8 files directly, match them by order
+            if (files.length === 8 && loadedCount < 8) {
+                Array.from(files).forEach((file, idx) => {
+                    const img = document.getElementById(`img-${idx}`);
+                    if (img) {
+                        img.src = URL.createObjectURL(file);
+                        loadedCount++;
+                    }
+                });
+            }
+
+            statusEl.classList.remove('hidden');
+            statusEl.textContent = `✨ Successfully loaded ${loadedCount || files.length} photo(s) into your gallery!`;
+        }
+
+        // Lightbox Modal Logic
+        function openLightbox(index) {
+            currentLightboxIdx = index;
+            const item = polaroidData[index];
+            const imgElement = document.getElementById(`img-${index}`);
+
+            document.getElementById('lightboxImg').src = imgElement.src;
+            document.getElementById('lightboxTitle').textContent = item.title;
+            document.getElementById('lightboxCaption').textContent = item.caption;
+            document.getElementById('lightboxDescription').textContent = item.desc;
+            document.getElementById('lightboxIndex').textContent = `${index + 1} / ${polaroidData.length}`;
+
+            const modal = document.getElementById('lightboxModal');
+            const container = document.getElementById('lightboxModalContainer');
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            const container = document.getElementById('lightboxModalContainer');
+
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function navigateLightbox(direction) {
+            currentLightboxIdx = (currentLightboxIdx + direction + polaroidData.length) % polaroidData.length;
+            openLightbox(currentLightboxIdx);
+        }
+
+        // Gentle Floating Particle Background
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const particles = [];
+            const particleCount = 28;
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 12 + 6,
+                    speedY: Math.random() * 0.4 + 0.15,
+                    speedX: (Math.random() - 0.5) * 0.2,
+                    opacity: Math.random() * 0.3 + 0.1,
+                    type: Math.random() > 0.5 ? 'heart' : 'sparkle'
+                });
+            }
+
+            function drawHeart(ctx, x, y, size, color) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                const d = size;
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-d / 2, -d / 2, -d, d / 3, 0, d);
+                ctx.bezierCurveTo(d, d / 3, d / 2, -d / 2, 0, 0);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function drawSparkle(ctx, x, y, size, color) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                ctx.arc(0, 0, size / 3, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.y -= p.speedY;
+                    p.x += p.speedX;
+
+                    if (p.y < -20) {
+                        p.y = canvas.height + 20;
+                        p.x = Math.random() * canvas.width;
+                    }
+
+                    const color = `rgba(183, 110, 121, ${p.opacity})`;
+                    if (p.type === 'heart') {
+                        drawHeart(ctx, p.x, p.y, p.size, color);
+                    } else {
+                        drawSparkle(ctx, p.x, p.y, p.size, color);
+                    }
+                });
+
+                requestAnimationFrame(render);
+            }
+
+            render();
+        }
+
+        // Initialize Page
+        window.onload = function() {
+            initParticles();
+        };
+    </script>
+</body>
+</html>
