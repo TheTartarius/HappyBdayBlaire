@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 19th Birthday Blaire! - Continents apart, united by hearts</title>
-    <!-- Google Font for the Polaroid text & Birthday styling -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-bg: #fdfaf6;
@@ -48,7 +50,7 @@
         }
 
         .bday-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 40px 30px;
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(214, 122, 122, 0.2);
@@ -153,27 +155,36 @@
 
         /* Birthday Cake Section */
         .cake-section {
-            padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.4);
-            margin: 20px auto;
-            max-width: 700px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 30px auto;
+            max-width: 750px;
             border-radius: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #f9d5d3;
         }
 
         .cake-section h3 {
             color: var(--accent-color);
             font-family: 'Playfair Display', serif;
-            font-size: 1.8em;
-            margin-bottom: 15px;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .cake-date {
+            color: #c45b5b;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
         }
 
         /* CSS Birthday Cake Styling */
         .cake-container {
             position: relative;
-            width: 160px;
-            height: 150px;
-            margin: 20px auto 10px auto;
+            width: 180px;
+            height: 170px;
+            margin: 20px auto 15px auto;
         }
 
         .plate {
@@ -181,10 +192,10 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 190px;
-            height: 12px;
+            width: 210px;
+            height: 14px;
             background: #e0e0e0;
-            border-radius: 6px;
+            border-radius: 7px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
 
@@ -196,68 +207,113 @@
         }
 
         .cake-layer-bottom {
-            bottom: 12px;
-            width: 140px;
-            height: 50px;
+            bottom: 14px;
+            width: 150px;
+            height: 55px;
             background: #f4a261;
         }
 
         .cake-layer-top {
-            bottom: 62px;
-            width: 110px;
-            height: 45px;
+            bottom: 69px;
+            width: 120px;
+            height: 50px;
             background: #e76f51;
         }
 
-        .frosting {
-            position: absolute;
-            background: #fff;
-            border-radius: 10px;
-        }
-
         .frosting-top {
-            top: 40px;
+            position: absolute;
+            top: 45px;
             left: 50%;
             transform: translateX(-50%);
-            width: 114px;
-            height: 15px;
+            width: 124px;
+            height: 18px;
+            background: #fff;
             border-radius: 0 0 10px 10px;
         }
 
-        .candle {
+        /* Multiple Candles for 19th Birthday */
+        .candles-row {
             position: absolute;
-            bottom: 107px;
+            bottom: 119px;
             left: 50%;
             transform: translateX(-50%);
-            width: 14px;
-            height: 35px;
-            background: repeating-linear-gradient(45deg, #ff9999, #ff9999 5px, #fff 5px, #fff 10px);
-            border-radius: 3px;
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+
+        .candle {
+            width: 10px;
+            height: 32px;
+            background: repeating-linear-gradient(45deg, #ff9999, #ff9999 4px, #fff 4px, #fff 8px);
+            border-radius: 2px;
+            position: relative;
         }
 
         .flame {
             position: absolute;
-            top: -16px;
+            top: -14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 10px;
-            height: 16px;
+            width: 8px;
+            height: 14px;
             background: #ffb703;
             border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px #ffb703, 0 0 20px #fb8500;
+            box-shadow: 0 0 8px #ffb703, 0 0 15px #fb8500;
             animation: flicker 1s infinite alternate;
         }
 
         @keyframes flicker {
             0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
-            100% { transform: translateX(-50%) scale(1.15); opacity: 1; filter: brightness(1.2); }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 1; filter: brightness(1.3); }
         }
 
         .cake-message {
             font-family: 'Caveat', cursive, sans-serif;
-            font-size: 1.5em;
+            font-size: 1.6em;
             color: #555;
-            margin-top: 10px;
+            margin-top: 15px;
+        }
+
+        /* Tarlan's Letter / Wish Section */
+        .wish-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(214, 122, 122, 0.08);
+            border-left: 5px solid var(--accent-color);
+            border-right: 5px solid var(--accent-color);
+            text-align: left;
+        }
+
+        .wish-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .wish-content {
+            font-family: 'Lora', serif;
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .wish-content p {
+            margin-bottom: 20px;
+            text-indent: 20px;
+        }
+
+        .wish-signature {
+            margin-top: 30px;
+            text-align: right;
+            font-family: 'Caveat', cursive, sans-serif;
+            font-size: 1.8em;
+            color: var(--accent-color);
         }
 
         /* Gallery Section */
@@ -306,7 +362,6 @@
             position: relative;
         }
 
-        /* Alternate tilts for a realistic scattered look */
         .polaroid:nth-child(odd) { transform: rotate(-3deg); }
         .polaroid:nth-child(even) { transform: rotate(2deg); }
         .polaroid:nth-child(3n) { transform: rotate(4deg); }
@@ -389,9 +444,10 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h1 { font-size: 2em; }
             .distance-text { font-size: 2.8em; }
+            .wish-section { padding: 20px; margin: 20px 15px; }
             .gallery-grid { gap: 20px; }
             .polaroid { width: 160px; padding: 8px 8px 55px 8px; }
             .polaroid img { height: 160px; }
@@ -406,7 +462,7 @@
         <div class="bday-card">
             <span class="date-badge">🎂 October 3rd 🎂</span>
             <h2>Happy 19th Birthday, Blaire!</h2>
-            <p>Tarlan prepared a little corner of the internet filled with your favorite memories across the 9,600 km distance. Make a wish and open your surprise!</p>
+            <p>Tarlan prepared a special corner of the internet across 9,600 km just for you. Make a wish and open your surprise!</p>
             <button class="open-btn" onclick="openSurprise()">Open Your Surprise ✨</button>
         </div>
     </div>
@@ -423,17 +479,35 @@
 
     <!-- 19th Birthday Cake Section -->
     <div class="cake-section">
-        <h3>Celebrating Blaire's 19th Birthday!</h3>
+        <h3>Happy 19th Birthday, My Love!</h3>
+        <div class="cake-date">🎉 October 3rd 🎉</div>
         <div class="cake-container">
             <div class="plate"></div>
             <div class="cake-layer cake-layer-bottom"></div>
             <div class="cake-layer cake-layer-top"></div>
-            <div class="frosting frosting-top"></div>
-            <div class="candle">
-                <div class="flame"></div>
+            <div class="frosting-top"></div>
+            <div class="candles-row">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
+                <div class="candle"><div class="flame"></div></div>
             </div>
         </div>
-        <div class="cake-message">"Wishing you 19 years of pure magic and a lifetime of happiness together 💖"</div>
+        <div class="cake-message">"Wishing you 19 years of pure magic and endless happiness 💖"</div>
+    </div>
+
+    <!-- Tarlan's Wish / Letter Section -->
+    <div class="wish-section">
+        <h3>Поздравление от Тарлана</h3>
+        <div class="wish-content">
+            <p>Моя жена, моя любимая, сегодня твой день рождения и я поздравляю тебя с этим событием! Тебе уже исполняется 19 лет, хоть это и не особенный возраст, ты можешь сделать его необычным. Ты в абсолютно новой среде, и адаптироваться тяжело, но я верю в тебя, ведь ты очень трудолюбивая, упорная и сильная. Ты уже преодолела больше преград чем многие даже придумать не могут. Поэтому я желаю тебе наконец то расслабиться и получить расслабленную студенческую жизнь с новыми друзьями, и на каникулах мы сможем видеться.</p>
+            
+            <p>Когда мы с тобой впервые познакомились, ты уже начала мне нравиться с первых минут нашего общения. Симпатия была настолько сильной что в тот день в клубе я решил что не могу потерять такого человека лишь из за дистанций, поэтому и согласился на отношения на расстояний. Далее, каждый последующий день удивлял меня все больше и больше, ведь ты сильнее и сильнее показывала насколько меня любишь. Для меня это было настолько непривычно, я испытал много вещей впервые именно с тобой. Впервые я показывал ласку на публике, впервые я был на колесе обозрения, я никогда не пробовал тыквенный кофе и уж тем более не мог гулять так уверенно в новом городе. Даже твое милое желание постоянно держаться за руки и целоваться меня удивило, но при этом, с тобой это ощущалось приятным образом очень обыденно, будто так и должны выглядеть наши отношения.</p>
+            
+            <p>У тебя есть дар наделять всех вокруг тебя хорошим настроением и радостью, и я надеюсь что ты сможешь так же дальше вдохновлять. Конечно нельзя забыть про твою доброту. Ты очень добрая и щедрая, бывает что даже до наивности. Однако это и делает тебя уникальной, так как в мире где все пожесточели, ты продолжаешь верить и надеяться. Покупая продукты отдавая сдачи ты помогаешь нуждающимся и оплачиваешь за других. Эта щедрость полностью поменяла мою точку зрения на деньги, как с средства силы и контроля, ты превращаешь их в нечто более легкое и полезное. Это мотивирует меня смотреть на них с другого ракурса, и честно я тоже понял что лучшая трата денег это на близкого человека.</p>
+            
+            <p>Все твои черты характера настолько редки и отчетливы что в моих глазах ты кажешься идеальной. Я тебя люблю и еще раз поздравляю, желаю тебе не просто оставаться таким же человеком, а расти дальше, ведь это и есть жизнь, и я буду расти бок о бок с тобой чтобы ты смогла получить партнера которого заслуживаешь ❤️</p>
+        </div>
+        <div class="wish-signature">— С любовью, Тarlan</div>
     </div>
 
     <!-- Polaroid Gallery Section -->
@@ -493,10 +567,26 @@
     </div>
 
     <script>
-        // Function to hide the birthday greeting overlay when clicked
+        // Trigger confetti automatically on load
+        window.onload = function() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        };
+
+        // Function to hide overlay and trigger another burst of confetti
         function openSurprise() {
             const overlay = document.getElementById('bday-overlay');
             overlay.classList.add('hidden');
+            
+            // Grand confetti burst
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.5 }
+            });
         }
 
         // Javascript to handle clicking on an image to enlarge it
@@ -506,17 +596,13 @@
         function openLightbox(imageSrc) {
             lightboxImg.src = imageSrc;
             lightbox.classList.add('active');
-            // Prevent scrolling on the background body while lightbox is open
             document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
-            // Close if clicking the background, or the 'X' button
             if (event.target === lightbox || event.target.className === 'close-btn') {
                 lightbox.classList.remove('active');
-                // Clear the source so it doesn't flash the old image next time
                 setTimeout(() => { lightboxImg.src = ''; }, 300);
-                // Restore scrolling
                 document.body.style.overflow = 'auto';
             }
         }
