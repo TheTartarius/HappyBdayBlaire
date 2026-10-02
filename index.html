@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continents apart, united by hearts</title>
-    <!-- Google Font for the Polaroid text -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <title>Happy 19th Birthday Blaire! - Continents apart, united by hearts</title>
+    <!-- Google Font for the Polaroid text & Birthday styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-bg: #fdfaf6;
@@ -23,6 +23,91 @@
             text-align: center;
         }
 
+        /* Birthday Splash Screen / Overlay */
+        #bday-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fcebe8, #faebd7, #fcebe8);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #bday-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .bday-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(214, 122, 122, 0.2);
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid #f9d5d3;
+            animation: popUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .bday-card h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .bday-card .date-badge {
+            display: inline-block;
+            background: #fcebe8;
+            color: #c45b5b;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .bday-card p {
+            font-size: 1.1em;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .open-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 4px 15px rgba(214, 122, 122, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .open-btn:hover {
+            background: #c45b5b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(214, 122, 122, 0.6);
+        }
+
+        @keyframes popUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
         /* Header Section */
         .header {
             padding: 60px 20px 40px;
@@ -33,6 +118,7 @@
             font-size: 2.5em;
             color: var(--accent-color);
             margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
         }
 
         .distance-container {
@@ -65,6 +151,115 @@
             margin-top: 15px;
         }
 
+        /* Birthday Cake Section */
+        .cake-section {
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            margin: 20px auto;
+            max-width: 700px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .cake-section h3 {
+            color: var(--accent-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        /* CSS Birthday Cake Styling */
+        .cake-container {
+            position: relative;
+            width: 160px;
+            height: 150px;
+            margin: 20px auto 10px auto;
+        }
+
+        .plate {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .cake-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+        }
+
+        .cake-layer-bottom {
+            bottom: 12px;
+            width: 140px;
+            height: 50px;
+            background: #f4a261;
+        }
+
+        .cake-layer-top {
+            bottom: 62px;
+            width: 110px;
+            height: 45px;
+            background: #e76f51;
+        }
+
+        .frosting {
+            position: absolute;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        .frosting-top {
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 114px;
+            height: 15px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .candle {
+            position: absolute;
+            bottom: 107px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 35px;
+            background: repeating-linear-gradient(45deg, #ff9999, #ff9999 5px, #fff 5px, #fff 10px);
+            border-radius: 3px;
+        }
+
+        .flame {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 16px;
+            background: #ffb703;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 10px #ffb703, 0 0 20px #fb8500;
+            animation: flicker 1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.15); opacity: 1; filter: brightness(1.2); }
+        }
+
+        .cake-message {
+            font-family: 'Caveat', cursive, sans-serif;
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 10px;
+        }
+
         /* Gallery Section */
         .gallery-section {
             padding: 40px 20px 80px;
@@ -76,7 +271,7 @@
             margin-bottom: 5px;
         }
 
-        h3 {
+        .gallery-section h3 {
             color: #666;
             font-weight: normal;
             font-size: 1.3em;
@@ -102,7 +297,7 @@
 
         .polaroid {
             background: white;
-            padding: 12px 12px 65px 12px; /* Increased bottom padding for longer quotes */
+            padding: 12px 12px 65px 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             border-radius: 2px;
             transition: all 0.3s ease;
@@ -206,6 +401,16 @@
 </head>
 <body>
 
+    <!-- Special Birthday Welcome Overlay -->
+    <div id="bday-overlay">
+        <div class="bday-card">
+            <span class="date-badge">🎂 October 3rd 🎂</span>
+            <h2>Happy 19th Birthday, Blaire!</h2>
+            <p>Tarlan prepared a little corner of the internet filled with your favorite memories across the 9,600 km distance. Make a wish and open your surprise!</p>
+            <button class="open-btn" onclick="openSurprise()">Open Your Surprise ✨</button>
+        </div>
+    </div>
+
     <!-- Header & Distance Section -->
     <div class="header">
         <h1>Continents apart, united by hearts</h1>
@@ -214,6 +419,21 @@
             <div class="distance-text">9,600 km</div>
             <div class="quote">"No distance is enough to separate us"</div>
         </div>
+    </div>
+
+    <!-- 19th Birthday Cake Section -->
+    <div class="cake-section">
+        <h3>Celebrating Blaire's 19th Birthday!</h3>
+        <div class="cake-container">
+            <div class="plate"></div>
+            <div class="cake-layer cake-layer-bottom"></div>
+            <div class="cake-layer cake-layer-top"></div>
+            <div class="frosting frosting-top"></div>
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+        </div>
+        <div class="cake-message">"Wishing you 19 years of pure magic and a lifetime of happiness together 💖"</div>
     </div>
 
     <!-- Polaroid Gallery Section -->
@@ -273,6 +493,12 @@
     </div>
 
     <script>
+        // Function to hide the birthday greeting overlay when clicked
+        function openSurprise() {
+            const overlay = document.getElementById('bday-overlay');
+            overlay.classList.add('hidden');
+        }
+
         // Javascript to handle clicking on an image to enlarge it
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
