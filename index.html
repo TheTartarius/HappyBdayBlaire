@@ -507,7 +507,7 @@
             
             <p>Все твои черты характера настолько редки и отчетливы что в моих глазах ты кажешься идеальной. Я тебя люблю и еще раз поздравляю, желаю тебе не просто оставаться таким же человеком, а расти дальше, ведь это и есть жизнь, и я буду расти бок о бок с тобой чтобы ты смогла получить партнера которого заслуживаешь ❤️</p>
         </div>
-        <div class="wish-signature">— С любовью, Тarlan</div>
+        <div class="wish-signature">— С любовью, Tarlan</div>
     </div>
 
     <!-- Polaroid Gallery Section -->
@@ -600,7 +600,7 @@
         }
 
         function closeLightbox(event) {
-            if (event.target === lightbox || event.target.className === 'close-btn') {
+            if (event.target === lightbox || event.target.classList.contains('close-btn')) {
                 lightbox.classList.remove('active');
                 setTimeout(() => { lightboxImg.src = ''; }, 300);
                 document.body.style.overflow = 'auto';
